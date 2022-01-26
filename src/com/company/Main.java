@@ -1,85 +1,61 @@
 package com.company;
 
-import java.util.Arrays;
 import static java.lang.Math.*;
+import static java.lang.Math.pow;
 
 public class Main {
-
     public static void main(String[] args) {
-
-        int nmbr=0;
-        int []m = new int[12];
-        for(int i=3;i<26;++i,++i,++nmbr) m[nmbr] = i;
-
-        System.out.println("Array m ="+Arrays.toString(m));
-
-
-        nmbr=0;
-        double []x = new double[15];
-        for(int i=0;i<15;++i,++nmbr) x[nmbr] =((random()*15)-6) ;
-
-        System.out.println("Array x ="+Arrays.toString(x));
-
-
-        int stroka=0;
-        int stolbec;
-        double [][]n = new double [12][15];
-
-        while(stroka<12) {
-            stolbec=0;
-            while (stolbec < 15){
-
-                if (m[stroka] == 19) {
-                    n[stroka][stolbec] = (
-                        //первая формула
-                        pow((atan(0.2*(x[stolbec]+1)/14)),0.25/(asin(pow(Math.E,(abs(-x[stolbec])))))-1)
-
-                    );
+        int[] m = new int[12];
+        for (int i = 0; i < 12; i++) m[i] = (i*2)+3;
+        System.out.print("Array m: ");
+        for (int i = 0; i < 12; i++) System.out.print(m[i] + " | ");
+        double[] x = new double[15];
+        for (int i = 0; i < 15; i++) x[i] = ((random() * 15) - 6);
+        System.out.print("\nArray x: ");
+        for (int i = 0; i < 15; i++) System.out.printf("%.3f | ", x[i]);
+        double[][] n = new double[12][15];
+        int line = 0;
+        int column;
+        while (line < 12) {
+            column = 0;
+            while (column < 15) {
+                if (m[line] == 19) {
+                    double firstCalc = ((atan(0.2 * (x[column] + 1) / 14)));
+                    double power = (0.25 / ((asin(pow(Math.E, -(abs(x[column]))))) - 1));
+                    double result = (pow(firstCalc, power));
+                    n[line][column] = (result);
+                } else if (m[line] == 5 || m[line] == 9 || m[line] == 11 || m[line] == 13 || m[line] == 17 || m[line] == 23) {
+                    double result = cos(cos(pow(x[column], 1.0 / 3)));
+                    n[line][column] = (result);
+                } else {
+                    double firstCalc = (pow(pow((x[column]), ((x[column]) - (3.0 / 4.0))), (1.0 / 3)));
+                    double secondCalc = (0.25 - pow(firstCalc, 3 + (cos(pow(x[column], 1.0 / 3)))));
+                    double power = (asin(E * pow(pow(-(4 / (abs(x[column]))), x[column]), 1.0 / 3)));
+                    double result;
+                    result = (pow(secondCalc, power));
+                    n[line][column] = (result);
                 }
-
-
-
-                    else if (m[stroka] == 11) {
-                    //вот тут я хз как сравнить с несколькими числами
-
-                        n[stroka][stolbec] = (
-                            //вторая формула
-
-                           cos(cos(pow(x[stolbec],1.0/3)))
-                        //тут тоже корень 3 степени вроде бы так но я не уверен
-
-                        );
-
-                    }
-                        else {
-                            n[stroka][stolbec] = (33
-
-                                //третья формула
-
-                            );
-                        }
-            ++stolbec;
+                column++;
             }
-
-        ++stroka;
+            line++;
         }
-
-        System.out.println("Array n :");
-        stroka=0;
-        while(stroka<12) {
-            stolbec=0;
-            while (stolbec < 15) {
-                System.out.print(stolbec+"/"+stroka+" = "+ n[stroka][stolbec]+" | ");
-                ++stolbec;
-                if(stolbec==15){
-                    System.out.println(" ");
+        System.out.println("\nArray n :");
+        line = 0;
+        String error = ("ERR");
+        while (line < 12) {
+            column = 0;
+            while (column < 15) {
+                if (Double.isNaN(n[line][column])) {
+                    System.out.printf("%2d/%2d = %8s | ", column, line, error);
+                } else {
+                    System.out.printf("%2d/%2d = %8.4f | ", column, line, n[line][column]);
+                }
+                column++;
+                if (column == 15) {
+                    System.out.println();
                 }
             }
-        ++stroka;
+            line++;
         }
     }
-
-
-
-
-    }
+}
