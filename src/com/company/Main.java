@@ -6,13 +6,15 @@ import static java.lang.Math.pow;
 public class Main {
     public static void main(String[] args) {
         int[] m = new int[12];
-        for (int i = 0; i < 12; i++) m[i] = (i*2)+3;
-        System.out.print("Array m: ");
-        for (int i = 0; i < 12; i++) System.out.print(m[i] + " | ");
+        for (int i = 0; i < m.length; i++) m[i] = (i * 2) + 3;
+        System.out.print("Array m: | ");
+        for (int j : m) System.out.print(j + " | ");
         double[] x = new double[15];
-        for (int i = 0; i < 15; i++) x[i] = ((random() * 15) - 6);
-        System.out.print("\nArray x: ");
-        for (int i = 0; i < 15; i++) System.out.printf("%.3f | ", x[i]);
+        final int maxRandom = 14;
+        final int minRandom = 6;
+        for (int i = 0; i < x.length; i++) x[i] = ((random() * maxRandom) - minRandom);
+        System.out.print("\nArray x: | ");
+        for (double v : x) System.out.printf("%.1f | ", v);
         double[][] n = new double[12][15];
         int line = 0;
         int column;
@@ -39,16 +41,16 @@ public class Main {
             }
             line++;
         }
-        System.out.println("\nArray n :");
+        System.out.println("\nArray n (Line/Column):");
         line = 0;
-        String error = ("ERR");
+        String error = ("ERROR");
         while (line < 12) {
             column = 0;
             while (column < 15) {
                 if (Double.isNaN(n[line][column])) {
-                    System.out.printf("%2d/%2d = %8s | ", column, line, error);
+                    System.out.printf("%2d/%2d = %8s | ", line, column, error);
                 } else {
-                    System.out.printf("%2d/%2d = %8.4f | ", column, line, n[line][column]);
+                    System.out.printf("%2d/%2d = %8.4f | ", line, column, n[line][column]);
                 }
                 column++;
                 if (column == 15) {
